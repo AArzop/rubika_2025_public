@@ -1,0 +1,28 @@
+#pragma once
+
+#ifdef ENABLE_PROFILER
+
+#include <Windows.h>
+#include <pix3.h>
+
+#define PROFILER_COLOR_BLACK PIX_COLOR(0, 0, 0)
+#define PROFILER_COLOR_RED PIX_COLOR(255, 0, 0)
+#define PROFILER_COLOR_GREEN PIX_COLOR(0, 255, 0)
+#define PROFILER_COLOR_BLUE PIX_COLOR(0, 0, 255)
+#define PROFILER_COLOR_WHITE PIX_COLOR(255, 255, 255)
+
+#define PROFILER_EVENT_BEGIN(color, ...) PIXBeginEvent(color, __VA_ARGS__)
+#define PROFILER_EVENT_END() PIXEndEvent()
+
+#else
+
+#define PROFILER_COLOR_BLACK
+#define PROFILER_COLOR_RED
+#define PROFILER_COLOR_GREEN
+#define PROFILER_COLOR_BLUE
+#define PROFILER_COLOR_WHITE
+
+#define PROFILER_EVENT_BEGIN(color, ...)
+#define PROFILER_EVENT_END()
+
+#endif

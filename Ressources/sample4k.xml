@@ -1,0 +1,14 @@
+<Animations>
+    <Animation Name="Default">
+        <X>0</X>
+        <Y>0</Y>
+        <SizeX>10</SizeX>
+        <SizeY>10</SizeY>
+        <OffsetX>0</OffsetX>
+        <OffsetY>0</OffsetY>
+        <SpriteNum>5</SpriteNum>
+        <SpritesOnLine>5</SpritesOnLine>
+        <Reverted>0</Reverted>
+        <TimeBetweenAnimation>0.5</TimeBetweenAnimation>
+    </Animation>
+</Animations>

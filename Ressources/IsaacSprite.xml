@@ -1,0 +1,159 @@
+<Animations>
+    <Animation Name="Head_Down">
+        <X>0</X>
+        <Y>0</Y>
+        <SizeX>28</SizeX>
+        <SizeY>25</SizeY>
+        <OffsetX>12</OffsetX>
+        <OffsetY>0</OffsetY>
+        <SpriteNum>1</SpriteNum>
+        <SpritesOnLine>2</SpritesOnLine>
+        <Reverted>0</Reverted>
+    </Animation>
+    <Animation Name="Head_Right">
+        <X>80</X>
+        <Y>0</Y>
+        <SizeX>28</SizeX>
+        <SizeY>25</SizeY>
+        <OffsetX>12</OffsetX>
+        <OffsetY>0</OffsetY>
+        <SpriteNum>1</SpriteNum>
+        <SpritesOnLine>2</SpritesOnLine>
+        <Reverted>0</Reverted>
+    </Animation>
+    <Animation Name="Head_Up">
+        <X>160</X>
+        <Y>0</Y>
+        <SizeX>28</SizeX>
+        <SizeY>25</SizeY>
+        <OffsetX>12</OffsetX>
+        <OffsetY>0</OffsetY>
+        <SpriteNum>1</SpriteNum>
+        <SpritesOnLine>2</SpritesOnLine>
+        <Reverted>0</Reverted>
+    </Animation>
+    <Animation Name="Head_Left">
+        <X>240</X>
+        <Y>0</Y>
+        <SizeX>28</SizeX>
+        <SizeY>25</SizeY>
+        <OffsetX>12</OffsetX>
+        <OffsetY>0</OffsetY>
+        <SpriteNum>1</SpriteNum>
+        <SpritesOnLine>2</SpritesOnLine>
+        <Reverted>0</Reverted>
+    </Animation>
+    <Animation Name="Body_Vertical">
+        <X>0</X>
+        <Y>30</Y>
+        <SizeX>18</SizeX>
+        <SizeY>15</SizeY>
+        <OffsetX>14</OffsetX>
+        <OffsetY>0</OffsetY>
+        <SpriteNum>10</SpriteNum>
+        <SpritesOnLine>10</SpritesOnLine>
+        <Reverted>0</Reverted>
+        <TimeBetweenAnimation>0.085</TimeBetweenAnimation>
+    </Animation>
+    <Animation Name="Body_Right">
+        <X>0</X>
+        <Y>46</Y>
+        <SizeX>18</SizeX>
+        <SizeY>13</SizeY>
+        <OffsetX>14</OffsetX>
+        <OffsetY>0</OffsetY>
+        <SpriteNum>10</SpriteNum>
+        <SpritesOnLine>10</SpritesOnLine>
+        <Reverted>0</Reverted>
+        <TimeBetweenAnimation>0.085</TimeBetweenAnimation>
+    </Animation>
+    <Animation Name="Body_Left">
+        <X>0</X>
+        <Y>46</Y>
+        <SizeX>18</SizeX>
+        <SizeY>13</SizeY>
+        <OffsetX>14</OffsetX>
+        <OffsetY>0</OffsetY>
+        <SpriteNum>10</SpriteNum>
+        <SpritesOnLine>10</SpritesOnLine>
+        <Reverted>1</Reverted>
+        <TimeBetweenAnimation>0.085</TimeBetweenAnimation>
+    </Animation>
+    <Animation Name="Head_Down_Red">
+        <X>0</X>
+        <Y>70</Y>
+        <SizeX>28</SizeX>
+        <SizeY>25</SizeY>
+        <OffsetX>12</OffsetX>
+        <OffsetY>0</OffsetY>
+        <SpriteNum>1</SpriteNum>
+        <SpritesOnLine>2</SpritesOnLine>
+        <Reverted>0</Reverted>
+    </Animation>
+    <Animation Name="Head_Right_Red">
+        <X>80</X>
+        <Y>70</Y>
+        <SizeX>28</SizeX>
+        <SizeY>25</SizeY>
+        <OffsetX>12</OffsetX>
+        <OffsetY>0</OffsetY>
+        <SpriteNum>1</SpriteNum>
+        <SpritesOnLine>2</SpritesOnLine>
+        <Reverted>0</Reverted>
+    </Animation>
+    <Animation Name="Head_Up_Red">
+        <X>160</X>
+        <Y>70</Y>
+        <SizeX>28</SizeX>
+        <SizeY>25</SizeY>
+        <OffsetX>12</OffsetX>
+        <OffsetY>0</OffsetY>
+        <SpriteNum>1</SpriteNum>
+        <SpritesOnLine>2</SpritesOnLine>
+        <Reverted>0</Reverted>
+    </Animation>
+    <Animation Name="Head_Left_Red">
+        <X>240</X>
+        <Y>70</Y>
+        <SizeX>28</SizeX>
+        <SizeY>25</SizeY>
+        <OffsetX>12</OffsetX>
+        <OffsetY>0</OffsetY>
+        <SpriteNum>1</SpriteNum>
+        <SpritesOnLine>2</SpritesOnLine>
+        <Reverted>0</Reverted>
+    </Animation>
+    <Animation Name="Body_Vertical_Red">
+        <X>0</X>
+        <Y>100</Y>
+        <SizeX>18</SizeX>
+        <SizeY>15</SizeY>
+        <OffsetX>14</OffsetX>
+        <OffsetY>0</OffsetY>
+        <SpriteNum>10</SpriteNum>
+        <SpritesOnLine>10</SpritesOnLine>
+        <Reverted>0</Reverted>
+    </Animation>
+    <Animation Name="Body_Right_Red">
+        <X>0</X>
+        <Y>116</Y>
+        <SizeX>18</SizeX>
+        <SizeY>13</SizeY>
+        <OffsetX>14</OffsetX>
+        <OffsetY>0</OffsetY>
+        <SpriteNum>10</SpriteNum>
+        <SpritesOnLine>10</SpritesOnLine>
+        <Reverted>0</Reverted>
+    </Animation>
+    <Animation Name="Body_Left_Red">
+        <X>0</X>
+        <Y>116</Y>
+        <SizeX>18</SizeX>
+        <SizeY>13</SizeY>
+        <OffsetX>14</OffsetX>
+        <OffsetY>0</OffsetY>
+        <SpriteNum>10</SpriteNum>
+        <SpritesOnLine>10</SpritesOnLine>
+        <Reverted>1</Reverted>
+    </Animation>
+</Animations>
