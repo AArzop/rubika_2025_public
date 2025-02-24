@@ -16,15 +16,24 @@ TextureMgr
 
   struct RequestData
   {
+    RequestData(const std::filesystem::path& texturePath, TextureMgr* pMgr);
+  
     std::filesystem::path TexturePath;
     std::vector<TextureLoadingCallback> Callbacks;
     std::vector<void*> UserData;
     sf::Thread Thread
   }
+
+et dans le cpp:
+
+TextureMgr::RequestData::RequestData(const std::filesystem::path& texturePath, TextureMgr* pMgr) :
+	Thread(std::bind(&TextureMgr::LoadTexture_Thread, pMgr, texturePath))
+{}
   
   std::map<std::filesystem::path, RequestData> Requesting
 
   void RequestTextureLoading(const std::filesystem::path& texturePath, TextureLoadingCallback callback, void* userData);
+  void LoadTexture_Thread(std::filesystem::path texturePath);
   sf::Texture* GetTexture(const std::filesystem::path& texturePath);
 
   void Update(float deltaTime);
@@ -37,7 +46,7 @@ TextureMgr
 Note sur les callbacks :
 Le système de callbacks de la std est un enfer, voici quelques solutions pour ne pas avoir à débugger tout ca :
 1. Définir le type de la callback (dans la partie public du textureMgr):
-  	using TextureLoadingCallback = std::function<void(const TextureData*, void* pUserData)>;
+  	using TextureLoadingCallback = std::function<void(const sf::Texture*, void* pUserData)>;
 
 2. La méthode  RequestTextureLoading du textureMgr attend un callback, on va donc lui donner
     partons du principer que le GameMgr à une méthode qui respecte la signature:
