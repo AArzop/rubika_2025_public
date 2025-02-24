@@ -8,7 +8,7 @@
 
 ---------------
 GameMgr
-    - lors d'un event (touché pressé par exemple), crée X enemy qui vont utiliser une des textures "enemy_texture_N.png" ou N est compris entre 1 et 5
+    - lors d'un event (touché pressé par exemple), créer X enemy qui vont utiliser une des textures "enemy_texture_N.png" ou N est compris entre 1 et 5
     - Au moment de la création, le GameMgr demande au TextureMgr si la texture est loadé, si oui on l'utilise directement, si non, on fait une requête
 
 TextureMgr
@@ -32,3 +32,25 @@ TextureMgr
       - Moyen simple : on check chaque frame toutes les requetes => peu efficace
       - On ajoute un container en plus pour faire ca
         std::set<std::filesystem::path> RequestDone
+
+
+Note sur les callbacks :
+Le système de callbacks de la std est un enfer, voici quelques solutions pour ne pas avoir à débugger tout ca :
+1. Définir le type de la callback (dans la partie public du textureMgr):
+  	using TextureLoadingCallback = std::function<void(const TextureData*, void* pUserData)>;
+
+2. La méthode  RequestTextureLoading du textureMgr attend un callback, on va donc lui donner
+    partons du principer que le GameMgr à une méthode qui respecte la signature:
+       void GameMgr::LoadCallback(const TextureData*, void* pUserData);
+
+   L'appel à RequestTextureLoading ressemblera à:
+     textureMgr.RequestLoadTexture("path", std::bind(&GameMgr::LoadCallback, this, std::placeholders::_1, std::placeholders::_2), userData);
+
+3. Pour appeler la callback stockée, on utilise la même manière qu'un appelle de fonction classique. Au seing du RequestData:
+  for (int i = 0; i < Callbacks.size(); ++i)
+  {
+    TextureLoadingCallback& callback = TextureLoadingCallback[i];
+     void* userData = UserData[i];
+
+     callback(texture, userData); // La texture provient du loading
+  }
