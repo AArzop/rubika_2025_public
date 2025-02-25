@@ -17,6 +17,21 @@ Système d'animation
    Modifier le GameMgr pour utiliser la classe Sprite au lieu du sf::Sprite
 
 
+Note rapidxml : 
+
+- Besoin d'inclure #include <rapidxml/rapidxml_utils.hpp> pour utiliser le fichier (plus simple que d'utiliser fopen...)
+Voici les types auquels vous devrez avoir besoin :
+	- rapidxml::file<>
+ 	- rapidxml::xml_document
+  	- rapidxml::xml_node<>
+  	- rapidxml::xml_attribute<>
+
+Voici les fonctions auquelles vous devriez avoir besoin:
+	- parse<0>
+ 	- first_node
+ 	- first_attribute
+  	- value / value_size
+   	- next_sibling
    
 
 
