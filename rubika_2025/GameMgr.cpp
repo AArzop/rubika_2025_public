@@ -10,7 +10,12 @@ void GameMgr::Init()
 {}
 
 void GameMgr::Update(float deltaTime)
-{}
+{
+	for (Entity* e : Entities)
+	{
+		// e->Update(deltaTime);
+	}
+}
 
 void GameMgr::Draw(sf::RenderWindow& window)
 {

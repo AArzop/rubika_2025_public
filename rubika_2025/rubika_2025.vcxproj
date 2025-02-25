@@ -209,6 +209,7 @@
     <ClCompile Include="GlobalMgr.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RandomMgr.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TextureMgr.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +220,7 @@
     <ClInclude Include="GlobalMgr.h" />
     <ClInclude Include="Profiler.h" />
     <ClInclude Include="RandomMgr.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="TextureMgr.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -17,7 +17,7 @@ void TextureMgr::Update(float)
 		auto it = Requesting.find(id);
 		if (it != Requesting.end())
 		{
-			const sLoadCallback& data = it->second;
+			const RequestData& data = it->second;
 			const sf::Texture* texture = GetTexture(id);
 			for (int i = 0; i < data.Callbacks.size(); ++i)
 			{
@@ -39,7 +39,7 @@ void TextureMgr::Update(float)
 		auto it = Requesting.find(id);
 		if (it != Requesting.end())
 		{
-			const sLoadCallback& data = it->second;
+			const RequestData& data = it->second;
 			TextureData* textureData = GetTextureData(id);
 			if (textureData)
 			{
@@ -133,7 +133,7 @@ void TextureMgr::RequestLoadTexture(const std::filesystem::path& texturePath, Lo
 			std::forward_as_tuple(texturePath, this));
 		if (itEmplace.second)
 		{
-			sLoadCallback& data = itEmplace.first->second;
+			RequestData& data = itEmplace.first->second;
 			data.Callbacks.push_back(callback);
 			data.UserData.push_back(userData);
 			data.Thread.launch();
@@ -145,7 +145,7 @@ void TextureMgr::RequestLoadTexture(const std::filesystem::path& texturePath, Lo
 	}
 	else
 	{
-		sLoadCallback& data = it->second;
+		RequestData& data = it->second;
 		data.Callbacks.push_back(callback);
 		data.UserData.push_back(userData);
 	}
@@ -179,6 +179,6 @@ void TextureMgr::LoadTexture_Thread(std::filesystem::path texturePath)
 	PROFILER_EVENT_END();
 }
 
-TextureMgr::sLoadCallback::sLoadCallback(const std::filesystem::path& texturePath, TextureMgr* pMgr) :
+TextureMgr::RequestData::RequestData(const std::filesystem::path& texturePath, TextureMgr* pMgr) :
 	Thread(std::bind(&TextureMgr::LoadTexture_Thread, pMgr, texturePath))
 {}
