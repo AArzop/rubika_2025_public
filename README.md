@@ -1,3 +1,33 @@
+Système d'animation
+
+1. Les classes qui devraient être impactées par cette partie ont été changés durant le dernier push
+   La classe TextureMgr et Sprite ont des commentaires expliquant brievement ce qu'elle devrait faire
+
+2. Voici l'ordre que je conseille :
+   Commenncer par la parsing dans le TextureMgr
+   	Au moment du loadTexture_Thread, vérifier que les dépendances existent (le fichier de metadata a le même nom que la texture avec l'extension xml)
+   	Avant ou après le loadFromFile de la texture, il faut load les metadata
+   	Petit point sur rapidxml en dessous
+
+   Implémenter la classe Sprite pour fonctionner avec les données de l'animation
+   	Le but est de load la texture avec un IntRect particulier qui correspond qu'à la partie à rendre
+   	La taille de l'animation ne change pas au sein d'une animation (ce qui peut aider), il faut donc bouger ce Rect au cours de l'animation
+   	Ne pas oublier le deltaTime
+
+   Modifier le GameMgr pour utiliser la classe Sprite au lieu du sf::Sprite
+
+
+   
+
+
+
+
+
+
+
+--------------
+
+
 1. Se rendre compte de la durée de chargement d'une texture
   => C'est long, très long
 
