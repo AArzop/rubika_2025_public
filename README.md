@@ -63,3 +63,9 @@ Le système de callbacks de la std est un enfer, voici quelques solutions pour n
 
      callback(texture, userData); // La texture provient du loading
   }
+
+
+Pour ajouter dans la map Requesting, 
+		auto itEmplace = Requesting.emplace(std::piecewise_construct,
+			std::forward_as_tuple(texturePath),
+			std::forward_as_tuple(texturePath, this));
