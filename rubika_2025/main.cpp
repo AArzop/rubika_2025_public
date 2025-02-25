@@ -1,17 +1,30 @@
 #include <SFML/Graphics.hpp>
 #include <Imgui/imgui.h>
 #include <Imgui/imgui-SFML.h>
+
 #include "Profiler.h"
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/View.hpp>
+#include <GlobalMgr.h>
+#include <GameMgr.h>
 
 unsigned long long uFrameCount = 0;
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(720, 480), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(GameMgr::GAME_SIZE_X * 2, GameMgr::GAME_SIZE_Y * 2), "SFML works!");
     ImGui::SFML::Init(window);
 
     sf::Clock clock;
     clock.restart();
+
+    GlobalMgr::Instance()->Init();
+
+    sf::View view(sf::Vector2f((float)GameMgr::GAME_SIZE_X / 2.f, (float)GameMgr::GAME_SIZE_Y / 2.f),
+        sf::Vector2f(GameMgr::GAME_SIZE_X, GameMgr::GAME_SIZE_Y));
+    window.setView(view);
+
+    //system("pause");
 
     while (window.isOpen())
     {
@@ -32,23 +45,32 @@ int main()
                 window.close();
             }
 
+            if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::P)
+            {
+                GlobalMgr::Instance()->GetGameMgr().SpawnEnemy();
+            }
+
             ImGui::SFML::ProcessEvent(window, event);
         }
 
         PROFILER_EVENT_END();
 
         PROFILER_EVENT_BEGIN(PROFILER_COLOR_RED, "Update");
-        ImGui::SFML::Update(window, imGuiTime);
+        //ImGui::SFML::Update(window, imGuiTime);
+
+        GlobalMgr::Instance()->Update(fDeltaTimeS);
 
         // sample
-        ImGui::ShowDemoWindow();
+        //ImGui::ShowDemoWindow();
 
         PROFILER_EVENT_END();
 
         PROFILER_EVENT_BEGIN(PROFILER_COLOR_GREEN, "Draw");
         window.clear();
 
-        ImGui::SFML::Render(window);
+        GlobalMgr::Instance()->Draw(window);
+
+        //ImGui::SFML::Render(window);
         window.display();
 
         PROFILER_EVENT_END();
@@ -58,6 +80,9 @@ int main()
     }
 
     ImGui::SFML::Shutdown();
+
+    GlobalMgr::Instance()->Delete();
+    GlobalMgr::DeleteInstance();
 
     return 0;
 }

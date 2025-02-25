@@ -205,13 +205,21 @@
     <ClCompile Include="..\Dependencies\Imgui\imgui_draw.cpp" />
     <ClCompile Include="..\Dependencies\Imgui\imgui_tables.cpp" />
     <ClCompile Include="..\Dependencies\Imgui\imgui_widgets.cpp" />
+    <ClCompile Include="GameMgr.cpp" />
+    <ClCompile Include="GlobalMgr.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="RandomMgr.cpp" />
+    <ClCompile Include="TextureMgr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameMgr.h" />
+    <ClInclude Include="GlobalMgr.h" />
     <ClInclude Include="Profiler.h" />
+    <ClInclude Include="RandomMgr.h" />
+    <ClInclude Include="TextureMgr.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
