@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SFML/Graphics/Sprite.hpp>
+#include <Sprite.h>
 #include <vector>
 
 class Entity;
@@ -32,7 +32,7 @@ private:
 	struct Entity
 	{
 		sf::Vector2f Position;
-		sf::Sprite Sprite;
+		Sprite Sprite;
 	};
 
 	std::vector<Entity*> Entities;

@@ -13,7 +13,7 @@ void GameMgr::Update(float deltaTime)
 {
 	for (Entity* e : Entities)
 	{
-		// e->Update(deltaTime);
+		e->Sprite.Update(deltaTime);
 	}
 }
 
@@ -23,7 +23,7 @@ void GameMgr::Draw(sf::RenderWindow& window)
 	{
 		sf::RenderStates states;
 		states.transform.translate(e->Position);
-		window.draw(e->Sprite, states);
+		window.draw(e->Sprite.Get(), states);
 	}
 }
 
@@ -84,6 +84,7 @@ void GameMgr::SpawnEnemy_Callback(const TextureData* textureData, void* userData
 		return;
 	}
 
-	e->Sprite.setTexture(textureData->Texture);
+	e->Sprite.SetTexture(textureData->Path);
+	e->Sprite.SetAnimation("Default");
 	Entities.push_back(e);
 }

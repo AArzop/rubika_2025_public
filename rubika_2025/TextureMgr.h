@@ -68,7 +68,6 @@ private:
 	// Recoit le node d'Animation de LoadTextureMetadata, parse toute les données compris dans le xml
 	// et stocke le résultat dans TextureData donné en paramètre
 	bool LoadAnimationMetadata(rapidxml::xml_node<>* node, TextureData& textureData);
-	bool LoadStaticTileMetadata(rapidxml::xml_node<>* node, TextureData& textureData);
 
 	struct RequestData
 	{

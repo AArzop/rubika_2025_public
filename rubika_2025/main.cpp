@@ -45,7 +45,7 @@ int main()
                 window.close();
             }
 
-            if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::P)
+            if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::O)
             {
                 GlobalMgr::Instance()->GetGameMgr().SpawnEnemy();
             }

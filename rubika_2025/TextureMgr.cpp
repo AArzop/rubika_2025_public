@@ -157,19 +157,13 @@ void TextureMgr::LoadTexture_Thread(std::filesystem::path texturePath)
 
 	PROFILER_EVENT_BEGIN(PROFILER_COLOR_BLUE, "Load Image");
 
-	TextureData textureData;
-	if (!textureData.Image.loadFromFile(texturePath.generic_string()))
+	if (!LoadTextureAndDependencies(texturePath))
 	{
 		TexturesMutex.lock();
 		Textures.emplace(texturePath, std::move(TextureData()));
 		TexturesMutex.unlock();
 	}
-	else
-	{
-		TexturesMutex.lock();
-		Textures.emplace(texturePath, std::move(textureData));
-		TexturesMutex.unlock();
-	}
+
 	PROFILER_EVENT_END();
 
 	CallbacksNextFrameMutex.lock();
@@ -179,6 +173,180 @@ void TextureMgr::LoadTexture_Thread(std::filesystem::path texturePath)
 	PROFILER_EVENT_END();
 }
 
+bool TextureMgr::CheckTextureDependencies(const std::filesystem::path& texturePath)
+{
+	if (!std::filesystem::exists(texturePath))
+	{
+		return false;
+	}
+
+	std::filesystem::path metadataPath = texturePath;
+	metadataPath.replace_extension(".xml");
+
+	if (!std::filesystem::exists(metadataPath))
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool TextureMgr::LoadTextureAndDependencies(const std::filesystem::path& texturePath)
+{
+	if (!CheckTextureDependencies(texturePath))
+	{
+		return false;
+	}
+
+	TextureData textureData;
+	textureData.Path = texturePath;
+	if (!textureData.Image.loadFromFile(texturePath.generic_string()))
+	{
+		return false;
+	}
+
+	std::filesystem::path metadataPath = texturePath;
+	metadataPath.replace_extension(".xml");
+
+	if (!LoadTextureMetadata(metadataPath, textureData))
+	{
+		return false;
+	}
+
+	TexturesMutex.lock();
+	Textures.emplace(texturePath, std::move(textureData));
+	TexturesMutex.unlock();
+	return true;
+}
+
+bool TextureMgr::LoadTextureMetadata(const std::filesystem::path& path, TextureData& textureData)
+{
+	rapidxml::file<> file(path.generic_string().c_str());
+	rapidxml::xml_document<> doc;
+	doc.parse<0>(file.data());
+
+	rapidxml::xml_node<>* rootNode = doc.first_node();
+	if (!rootNode)
+	{
+		return false;
+	}
+
+	bool b = LoadAnimationMetadata(rootNode, textureData);
+	return b;
+}
+
+bool TextureMgr::LoadAnimationMetadata(rapidxml::xml_node<>* node, TextureData& textureData)
+{
+	if (!node)
+	{
+		return false;
+	}
+
+	rapidxml::xml_node<>* animationNode = node->first_node("Animation");
+	while (animationNode)
+	{
+		rapidxml::xml_attribute<>* nameAttr = animationNode->first_attribute("Name");
+		if (!nameAttr || nameAttr->value_size() == 0)
+		{
+			animationNode = animationNode->next_sibling("Animation");
+			continue;
+		}
+
+		std::string name = nameAttr->value();
+
+		AnimationData animData;
+
+		{
+			rapidxml::xml_node<>* node = animationNode->first_node("X");
+			if (node)
+			{
+				animData.StartX = std::atoi(node->value());
+			}
+		}
+
+		{
+			rapidxml::xml_node<>* node = animationNode->first_node("Y");
+			if (node)
+			{
+				animData.StartY = std::atoi(node->value());
+			}
+		}
+
+		{
+			rapidxml::xml_node<>* node = animationNode->first_node("SizeX");
+			if (node)
+			{
+				animData.SizeX = std::atoi(node->value());
+			}
+		}
+
+		{
+			rapidxml::xml_node<>* node = animationNode->first_node("SizeY");
+			if (node)
+			{
+				animData.SizeY = std::atoi(node->value());
+			}
+		}
+
+		{
+			rapidxml::xml_node<>* node = animationNode->first_node("OffsetX");
+			if (node)
+			{
+				animData.OffsetX = std::atoi(node->value());
+			}
+		}
+
+		{
+			rapidxml::xml_node<>* node = animationNode->first_node("OffsetY");
+			if (node)
+			{
+				animData.OffsetY = std::atoi(node->value());
+			}
+		}
+
+		{
+			rapidxml::xml_node<>* node = animationNode->first_node("SpriteNum");
+			if (node)
+			{
+				animData.AnimationSpriteCount = std::atoi(node->value());
+			}
+		}
+
+		{
+			rapidxml::xml_node<>* node = animationNode->first_node("SpritesOnLine");
+			if (node)
+			{
+				animData.SpriteOnLine = std::atoi(node->value());
+			}
+		}
+
+		{
+			rapidxml::xml_node<>* node = animationNode->first_node("Reverted");
+			if (node)
+			{
+				animData.IsReverted = std::atoi(node->value());
+			}
+		}
+
+		{
+			rapidxml::xml_node<>* node = animationNode->first_node("TimeBetweenAnimation");
+			if (node)
+			{
+				animData.TimeBetweenAnimationInS = std::atof(node->value());
+			}
+		}
+
+		textureData.AnimationsData.emplace(name, animData);
+		animationNode = animationNode->next_sibling("Animation");
+	}
+
+	return true;
+}
+
 TextureMgr::RequestData::RequestData(const std::filesystem::path& texturePath, TextureMgr* pMgr) :
 	Thread(std::bind(&TextureMgr::LoadTexture_Thread, pMgr, texturePath))
+{}
+
+AnimationData::AnimationData() : StartX(0), StartY(0), SizeX(0), SizeY(0),
+OffsetX(0), OffsetY(0), AnimationSpriteCount(0), SpriteOnLine(0), IsReverted(false)
 {}
