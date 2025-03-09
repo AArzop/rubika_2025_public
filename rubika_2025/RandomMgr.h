@@ -18,6 +18,12 @@ public:
 	void SetSeed(uint32_t seed);
 	uint32_t GetSeed() const { return Seed; }
 
+#ifdef _DEBUG
+
+	void DrawDebug();
+
+#endif
+
 private:
 
 	std::default_random_engine RandomEng;

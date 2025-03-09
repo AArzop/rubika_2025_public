@@ -18,7 +18,6 @@ public:
 	void Init();
 	void Update(float deltaTime);
 	void Draw(sf::RenderWindow& window);
-	void DrawDebug();
 	void Delete();
 
 	static GlobalMgr* Instance();
@@ -27,6 +26,13 @@ public:
 	TextureMgr& GetTextureMgr() const;
 	GameMgr& GetGameMgr() const;
 	RandomMgr& GetRandomMgr() const;
+
+#ifdef _DEBUG
+public:
+	void DrawDebug();
+private:
+	bool m_OpenDebugWindow = true;
+#endif
 
 private:
 

@@ -1,12 +1,15 @@
 #include "RandomMgr.h"
 
+#ifdef _DEBUG
+
+#include <Imgui/imgui.h>
+
+#endif
 RandomMgr::RandomMgr() : Seed(0)
-{
-}
+{}
 
 RandomMgr::~RandomMgr()
-{
-}
+{}
 
 unsigned RandomMgr::RandUInt(unsigned min, unsigned max)
 {
@@ -37,3 +40,12 @@ void RandomMgr::SetSeed(uint32_t seed)
 	RandomEng.seed(seed);
 	Seed = seed;
 }
+
+#ifdef _DEBUG
+
+void RandomMgr::DrawDebug()
+{
+	ImGui::Text("Seed : %lld", Seed);
+}
+
+#endif

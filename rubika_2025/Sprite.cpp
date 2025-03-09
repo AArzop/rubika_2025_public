@@ -1,76 +1,88 @@
 #include "Sprite.h"
 
-#include <GlobalMgr.h>
 #include <TextureMgr.h>
+#include <GlobalMgr.h>
 
-void Sprite::Init()
-{
-	CurrentAnimationData = nullptr;
-}
+void Sprite::Start()
+{}
 
 void Sprite::Update(float deltaTime)
 {
-	if (!PlayAnimation)
+	if (PlayAnimation)
 	{
-		return;
-	}
-
-	CurrentAnimationTime += deltaTime;
-	if (CurrentAnimationTime > CurrentAnimationData->TimeBetweenAnimationInS)
-	{
-		CurrentAnimationTime = 0.f;
-		++CurrentAnimationNb;
-		if (CurrentAnimationNb > CurrentAnimationData->AnimationSpriteCount)
+		CurrentAnimationTime += deltaTime;
+		if (CurrentAnimationTime < CurrentAnimationData->TimeBetweenAnimationInS)
 		{
-			CurrentAnimationNb = 0;
+			++CurrentAnimationNb;
+			if (CurrentAnimationNb >= CurrentAnimationData->AnimationSpriteCount)
+			{
+				CurrentAnimationNb = 0;
+			}
+			CurrentAnimationTime = 0;
 		}
 	}
 
 	unsigned line = CurrentAnimationNb / CurrentAnimationData->SpriteOnLine;
-	unsigned coluln = CurrentAnimationNb % CurrentAnimationData->SpriteOnLine;
+	unsigned column = CurrentAnimationNb % CurrentAnimationData->SpriteOnLine;
 
 	sf::IntRect rect;
-	rect.width = CurrentAnimationData->SizeX;
-	rect.height = CurrentAnimationData->SizeY;
 
-	rect.top = CurrentAnimationData->StartY + line * (CurrentAnimationData->SizeY + CurrentAnimationData->OffsetY);
-	rect.left = CurrentAnimationData->StartX + coluln * (CurrentAnimationData->SizeX + CurrentAnimationData->OffsetX);
+	if (!CurrentAnimationData->IsReverted)
+	{
+		rect.height = CurrentAnimationData->SizeY;
+		rect.top = CurrentAnimationData->StartY + line * (CurrentAnimationData->OffsetY + CurrentAnimationData->SizeY);
+
+		rect.width = CurrentAnimationData->SizeX;
+		rect.left = CurrentAnimationData->StartX + column * (CurrentAnimationData->OffsetX + CurrentAnimationData->SizeX);
+	}
+	else
+	{
+		rect.height = CurrentAnimationData->SizeY;
+		rect.top = CurrentAnimationData->StartY + line * (CurrentAnimationData->OffsetY + CurrentAnimationData->SizeY);
+
+		rect.width = -CurrentAnimationData->SizeX;
+		rect.left = CurrentAnimationData->StartX + column * (CurrentAnimationData->OffsetX + CurrentAnimationData->SizeX) + CurrentAnimationData->SizeX;
+	}
 
 	sfSprite.setTextureRect(rect);
 }
 
 void Sprite::Reset()
 {
+	CurrentAnimationTime = 0.f;
+	CurrentAnimationNb = 0;
 }
 
 void Sprite::SetTexture(const std::filesystem::path& textureName)
 {
-	TextureMgr& textureMgr = GlobalMgr::Instance()->GetTextureMgr();
-	const sf::Texture* texture = textureMgr.GetTexture(textureName);
-	if (texture)
+	const TextureData* textureData = GlobalMgr::Instance()->GetTextureMgr().GetTextureData(textureName);
+	if (textureData)
 	{
-		sfSprite.setTexture(*texture);
-		CurrentTexture = textureName;
+		sfSprite.setTexture(textureData->Texture);
 	}
+	CurrentTexture = textureName;
 }
 
 void Sprite::SetAnimation(const std::string& animationName)
 {
-	TextureMgr& textureMgr = GlobalMgr::Instance()->GetTextureMgr();
-	const TextureData* textureData = textureMgr.GetTextureData(CurrentTexture);
-	if (!textureData)
+	const TextureData* textureData = GlobalMgr::Instance()->GetTextureMgr().GetTextureData(CurrentTexture);
+	if (textureData)
 	{
-		return;
+		const auto& it = textureData->AnimationsData.find(animationName);
+		if (it != textureData->AnimationsData.end())
+		{
+			CurrentAnimationData = &it->second;
+		}
+		else
+		{
+			CurrentAnimationData = nullptr;
+		}
 	}
 
-	const auto& it = textureData->AnimationsData.find(animationName);
-	if (it != textureData->AnimationsData.end())
-	{
-		CurrentAnimationData = &it->second;
-	}
+	CurrentAnimation = animationName;
 }
 
 void Sprite::EnableAnimation(bool enable)
 {
-	PlayAnimation = enable;
+	//PlayAnimation = enable;
 }

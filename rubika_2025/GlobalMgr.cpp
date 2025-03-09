@@ -5,6 +5,7 @@
 #include <RandomMgr.h>
 
 #include <time.h>
+#include <Imgui/imgui.h>
 
 GlobalMgr::GlobalMgr() : pTextureMgr(nullptr), pGameMgr(nullptr), pRandomMgr(nullptr)
 {
@@ -42,7 +43,33 @@ void GlobalMgr::Draw(sf::RenderWindow& window)
 
 void GlobalMgr::DrawDebug()
 {
-    pGameMgr->DrawDebug();
+#ifdef _DEBUG
+    if (ImGui::Begin("DebugWindow", &m_OpenDebugWindow))
+    {
+        if (ImGui::BeginTabBar("#MgrDebug"))
+        {
+            if (ImGui::BeginTabItem("Game"))
+            {
+                pGameMgr->DrawDebug();
+                ImGui::EndTabItem();
+            }
+            if (ImGui::BeginTabItem("Texture"))
+            {
+                pTextureMgr->DrawDebug();
+                ImGui::EndTabItem();
+            }
+            if (ImGui::BeginTabItem("Random"))
+            {
+                pRandomMgr->DrawDebug();
+                ImGui::EndTabItem();
+            }
+        
+            ImGui::EndTabBar();
+        }
+
+        ImGui::End();
+    }
+#endif
 }
 
 void GlobalMgr::Delete()

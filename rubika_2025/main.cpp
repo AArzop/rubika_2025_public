@@ -4,6 +4,7 @@
 
 #include "Profiler.h"
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/View.hpp>
 #include <GlobalMgr.h>
 #include <GameMgr.h>
@@ -13,7 +14,9 @@ unsigned long long uFrameCount = 0;
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(GameMgr::GAME_SIZE_X * 2, GameMgr::GAME_SIZE_Y * 2), "SFML works!");
+#ifdef _DEBUG
     ImGui::SFML::Init(window);
+#endif
 
     sf::Clock clock;
     clock.restart();
@@ -21,10 +24,8 @@ int main()
     GlobalMgr::Instance()->Init();
 
     sf::View view(sf::Vector2f((float)GameMgr::GAME_SIZE_X / 2.f, (float)GameMgr::GAME_SIZE_Y / 2.f),
-        sf::Vector2f(GameMgr::GAME_SIZE_X, GameMgr::GAME_SIZE_Y));
+    sf::Vector2f(GameMgr::GAME_SIZE_X, GameMgr::GAME_SIZE_Y));
     window.setView(view);
-
-    //system("pause");
 
     while (window.isOpen())
     {
@@ -45,23 +46,23 @@ int main()
                 window.close();
             }
 
-            if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::O)
-            {
-                GlobalMgr::Instance()->GetGameMgr().SpawnEnemy();
-            }
-
+#ifdef _DEBUG
             ImGui::SFML::ProcessEvent(window, event);
+#endif
         }
 
         PROFILER_EVENT_END();
 
         PROFILER_EVENT_BEGIN(PROFILER_COLOR_RED, "Update");
-        //ImGui::SFML::Update(window, imGuiTime);
+#ifdef _DEBUG
+        ImGui::SFML::Update(window, imGuiTime);
+#endif
 
         GlobalMgr::Instance()->Update(fDeltaTimeS);
 
-        // sample
-        //ImGui::ShowDemoWindow();
+#ifdef _DEBUG
+        GlobalMgr::Instance()->DrawDebug();
+#endif
 
         PROFILER_EVENT_END();
 
@@ -70,7 +71,9 @@ int main()
 
         GlobalMgr::Instance()->Draw(window);
 
-        //ImGui::SFML::Render(window);
+#ifdef _DEBUG
+        ImGui::SFML::Render(window);
+#endif
         window.display();
 
         PROFILER_EVENT_END();
@@ -79,7 +82,9 @@ int main()
         ++uFrameCount;
     }
 
+#ifdef _DEBUG
     ImGui::SFML::Shutdown();
+#endif
 
     GlobalMgr::Instance()->Delete();
     GlobalMgr::DeleteInstance();
