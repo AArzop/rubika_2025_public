@@ -1,3 +1,33 @@
+# Debug
+
+L'objectif de cette exercice est se familliariser avec le debugger. Pour ce faire, vous aurez la base de code d'un jeu assez simple (voir les règles ci-dessous).
+Cependant, cette base de code comporte de nombreuses erreurs disséminées à différents endroits du code. Certaines (la plupart) sont très graves (crash) d'autres sont plus discrètes.
+Votre objectif dans un premier temps est de réparer le projet pour qu'il puisse fonctionner comme il devrait. Je vous encourage très fortement ;) ;) ;) à garder une trace de vos différents trouvailles et de la façon dont vous les avez résolues.
+
+Ce projet est le votre, vous pouvez donc en réécrire certains parties si vous désirez. Gardez cependant à l'esprit que le projet à d'abord été complété avant d'ajouter/de retirer/de modifier certains parties pour ajouter des bugs. Une réécriture complète n'est donc très probablement pas la bonne solution.
+
+## Règles du jeu
+- Une succession de round
+- Le joueur peut se déplacer dans les 8 directions à sa guise
+- Durant un round, un certain nombre d'ennemis vont apparaitre et balayer l'écran dans une des 4 directions
+- Si le joueur entre en contact avec l'un des ennemis, la partie s'arrète
+- Il s'écoule un temps non constant entre l'apparition de deux ennemis
+- Le nombre d'ennemis croit avec les round tandis que le temps d'apparition diminue
+- Un round se finit lorsqu'il n'y a plus d'ennemi à faire apparaitre.
+- Entre deux rounds s'écoule un petit temps permettant au joueur de faire une pause
+
+## Conseils
+
+Si vous êtes perdus et vous ne savez pas quel chemin suivre, voici quelques conseils:
+- Lancer **toujours** votre programme avec debbuger attaché. Autrement, vous n'aurez que le mimimum d'informations. De même, utiliser la configuration **debug** lors de vos recherches.
+- La première chose à faire est de se focaliser sur le bug les plus problématique (les crashs)
+- Certains sont reproduisibles à l'infini, d'autres sont plus situationnel. Traquer s'en un qui est facilement reproduisible.
+- Focalisez vous sur un seul problème à la fois (sauf bien entendu si vous voyez une erreur évidente en lisant le code)
+- Vous ne devriez avoir besoin que d'ajouter un membre (et donc de modifier ce qu'il faut pour l'intégrer). Si vous ajoutez plus, c'est peut être un signe que vous n'allez pas dans la bonne direction.
+- N'hésitez pas à poser des questions!!!
+
+------------------------------------------------------------------------------
+
 # Système d'animation
 
 1. Les classes qui devraient être impactées par cette partie ont été changés durant le dernier push
