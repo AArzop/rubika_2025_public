@@ -1,6 +1,29 @@
+# Tooling
+
+L'objectif de cet exercice est de se familiariser avec un outil d'interface (ImGUi) afin de créer une interface de debug permettant de visualiser certains informations du jeu mais aussi des outils de debug permettant d'alterer le flow/règle/... du jeu
+
+Pour se faire, implémenter les différentes fonctions `DrawDebug` des managers afin de réaliser certains taches:
+
+Commençons par le `GameMgr`, voici une liste de différentes features à implémenter :
+- Visualisation des variables du jeu comme le round actuel, le temps de break, le nombre d'enemis par vagues...
+- Ajouter des boutons permettant de lancer des actions spécifiques:
+  * Activer/Désactiver le God Mode
+  * Lancer un round spécifique (ex: jouer le round 250)
+  * Relancer le jeu un fois perdu
+  * ...
+- Permettre de modifier via une interface les variables du jeu pour que n'importe qui puisse ajuster le jeu.
+  * Dans un premier temps, ces modifications ne doivent avoir lieu que lors de l'instance active du programme (on perd les modifications au reboot).
+  * Faire en sorte que ces variables persistent d'une session à l'autre.
+
+Ensuite, passez au `TextureMgr` et au `RandomMgr`. Voici quelques idées:
+- Changer la seed
+- Visualiser les textures chargées, en chargement...
+- Pouvoir unload un texture à la volée
+
+
 # Debug
 
-L'objectif de cette exercice est se familliariser avec le debugger. Pour ce faire, vous aurez la base de code d'un jeu assez simple (voir les règles ci-dessous).
+L'objectif de cet exercice est de se familliariser avec le debugger. Pour ce faire, vous aurez la base de code d'un jeu assez simple (voir les règles ci-dessous).
 Cependant, cette base de code comporte de nombreuses erreurs disséminées à différents endroits du code. Certaines (la plupart) sont très graves (crash) d'autres sont plus discrètes.
 Votre objectif dans un premier temps est de réparer le projet pour qu'il puisse fonctionner comme il devrait. Je vous encourage très fortement ;) ;) ;) à garder une trace de vos différents trouvailles et de la façon dont vous les avez résolues.
 
