@@ -20,6 +20,9 @@ Ensuite, passez au `TextureMgr` et au `RandomMgr`. Voici quelques idées:
 - Visualiser les textures chargées, en chargement...
 - Pouvoir unload un texture à la volée
 
+## Conseils
+
+- Voici une petite [aide ImGui](https://pthom.github.io/imgui_manual_online/)
 
 # Debug
 
