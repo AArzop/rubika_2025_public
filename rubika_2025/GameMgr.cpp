@@ -22,7 +22,7 @@ void GameMgr::Init()
 	p->SetPosition(sf::Vector2f((float)GAME_SIZE_X / 2.f, (float)GAME_SIZE_Y / 2.f));
 
 	TextureMgr& textureMgr = GlobalMgr::Instance()->GetTextureMgr();
-	textureMgr.RequestLoadTexture("../resources/IsaacSprite.png", std::bind(&GameMgr::SpawnPlayer_Callback, this, std::placeholders::_1, std::placeholders::_2), p);
+	textureMgr.RequestLoadTexture("../ressources/IsaacSprite.png", std::bind(&GameMgr::SpawnPlayer_Callback, this, std::placeholders::_1, std::placeholders::_2), p);
 
 	MaxNumberOfEnemy = 25;
 	NumberOfEnemyLeft = MaxNumberOfEnemy;
@@ -43,6 +43,20 @@ void GameMgr::Update(float deltaTime)
 	{
 		RoundUpdate(deltaTime);
 	}
+
+	for (const Entity* e : EntitiesToRemove)
+	{
+		for (auto it = Entities.begin(); it != Entities.end(); ++it)
+		{
+			if (*it == e)
+			{
+				delete* it;
+				Entities.erase(it);
+				break;
+			}
+		}
+	}
+	EntitiesToRemove.clear();
 
 	for (Entity* e : Entities)
 	{
@@ -104,14 +118,7 @@ void GameMgr::Reset()
 
 void GameMgr::RequestEntityDeletion(const Entity* entity)
 {
-	for (auto it = Entities.begin(); it != Entities.end(); ++it)
-	{
-		if (*it == entity)
-		{
-			delete entity;
-			Entities.erase(it);
-		}
-	}
+	EntitiesToRemove.push_back(entity);
 }
 
 void GameMgr::OnRoundStart()
@@ -177,7 +184,7 @@ void GameMgr::SpawnEnemy()
 	{
 	case eDirection::Up:
 		pos.x = randMgr.RandNormalDouble(GAME_SIZE_X / 2.0, dist);
-		pos.x = -e->GetSize().y;
+		pos.y = -e->GetSize().y;
 		break;
 	case eDirection::Down:
 		pos.x = randMgr.RandNormalDouble(GAME_SIZE_X / 2.0, dist);
@@ -203,10 +210,10 @@ void GameMgr::SpawnEnemy()
 
 	TextureMgr& textureMgr = GlobalMgr::Instance()->GetTextureMgr();
 
-	int textureNb = randMgr.RandInt32(1, 6);
+	int textureNb = randMgr.RandInt32(1, 5);
 
 	char buf[128] = {};
-	snprintf(buf, sizeof(buf), "../resources/enemy_texture_%d.png", textureNb);
+	snprintf(buf, sizeof(buf), "../ressources/enemy_texture_%d.png", textureNb);
 	//snprintf(buf, sizeof(buf), "../resources/sample4k.jpg");
 
 	textureMgr.RequestLoadTexture(buf, std::bind(&GameMgr::SpawnEnemy_Callback, this, std::placeholders::_1, std::placeholders::_2), e);

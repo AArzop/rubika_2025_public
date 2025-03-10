@@ -11,7 +11,7 @@ void Sprite::Update(float deltaTime)
 	if (PlayAnimation)
 	{
 		CurrentAnimationTime += deltaTime;
-		if (CurrentAnimationTime < CurrentAnimationData->TimeBetweenAnimationInS)
+		if (CurrentAnimationTime >= CurrentAnimationData->TimeBetweenAnimationInS)
 		{
 			++CurrentAnimationNb;
 			if (CurrentAnimationNb >= CurrentAnimationData->AnimationSpriteCount)
@@ -84,5 +84,5 @@ void Sprite::SetAnimation(const std::string& animationName)
 
 void Sprite::EnableAnimation(bool enable)
 {
-	//PlayAnimation = enable;
+	PlayAnimation = enable;
 }

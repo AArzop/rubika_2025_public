@@ -33,7 +33,7 @@ public:
 	void DrawDebug();
 
 private:
-	bool InvicibleMode = false;
+	bool InvicibleMode = true;
 
 #else
 	bool InvicibleMode = false;
@@ -60,6 +60,7 @@ private:
 	float BreakTime;
 
 	std::vector<Entity*> Entities;
+	std::vector<const Entity*> EntitiesToRemove;
 
 	Player* pPlayer = nullptr;
 	bool LoseGame = false;

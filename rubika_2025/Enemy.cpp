@@ -32,7 +32,7 @@ void Enemy::Update(float deltaTime)
 		Position.x -= Speed * deltaTime;
 		break;
 	case eDirection::Right:
-		Position.x += Speed;
+		Position.x += Speed * deltaTime;
 		break;
 	case eDirection::None:
 	case eDirection::Count:
@@ -48,7 +48,6 @@ void Enemy::Update(float deltaTime)
 		Position.y < -Size.y || Position.y > GameMgr::GAME_SIZE_Y)
 	{
 		GlobalMgr::Instance()->GetGameMgr().RequestEntityDeletion(this);
-		delete this;
 	}
 }
 
